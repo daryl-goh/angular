@@ -1,0 +1,10 @@
+<h2>Images</h2>
+
+
+<div *ngFor="let g of gifs"> 
+    {{ g.title }}
+    <a [href]="g.url">
+        <img [src]="g.imageUrl">
+    </a>
+
+</div>

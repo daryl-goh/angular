@@ -1,0 +1,25 @@
+<form [formGroup]="giphyForm" (ngSubmit)="processForm()">
+  <table>
+    <tr>
+      <td>
+        <input type="text" placeholder="Search" formControlName="search" />
+      </td>
+      <td>
+        <label for="limit">Limit</label>
+      </td>
+      <td>
+        <select name="limit" formControlName="limit">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <td><button type="submit">Search</button></td>
+      <td><button type="button">Reset</button></td>
+    </tr>
+  </table>
+</form>
