@@ -1,0 +1,65 @@
+<h2>Cart</h2>
+<form [formGroup]="form" (ngSubmit)="processForm()">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" placeholder="Name" formControlName="name"></td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td><input type="text" placeholder="Address" formControlName="address"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" placeholder="Email" formControlName="email"></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input type="text" placeholder="Phone" formControlName="phone"></td>
+        </tr>
+        <tr>
+            <td>Express:</td>
+            <td><input type="checkbox" formControlName="express"></td>
+        </tr>
+        <tr>
+            <td>Delivery:</td>
+            <td>
+                <input type="radio" value="morning" formControlName="delivery">0900 - 1100
+                <input type="radio" value="afternoon" formControlName="delivery">1100 - 1500
+                <input type="radio" value="evening" formControlName="delivery">1500 - 1900
+            </td>
+        </tr>
+        <tr>
+            <td><button type="submit">Checkout</button></td>
+            <td><button type="button" (click)="addLineItem()">Add</button></td>
+        </tr>
+        
+    </table>
+
+    <div *ngIf ="lineItems.length <= 0">
+        <h2>You cart is empty</h2>
+    </div>
+
+    <div *ngIf="lineItems.length > 0">
+    <h2>Line Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody formArrayName="lineItems">
+            <tr *ngFor="let li of lineItems.controls; let i = index" [formGroupName]="i">
+                <td><input type="text" placeholder="Item" formControlName="item"></td>
+                <td><input type="number" placeholder="Quantity" formControlName="quantity"></td>
+                <td><input type="number" placeholder="Price" formControlName="unitPrice"></td>
+                <td><button type="button" (click)="removeLineItem(i)">X</button></td>
+            </tr>
+
+        </tbody>
+    </table>
+    </div>
+
+</form>
