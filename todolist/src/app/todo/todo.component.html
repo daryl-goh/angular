@@ -1,0 +1,23 @@
+<h2>To Do</h2>
+
+<form [formGroup]="form" (ngSubmit)="processForm()">
+  <table>
+    <tr>
+      <td>Name:</td>
+      <td><input type="text" placeholder="Name" formControlName="name"></td>
+    </tr>
+
+    <tr>
+      <td>Email:</td>
+      <td><input type="text" placeholder="Email" formControlName="email"></td>
+    </tr>
+
+    <tr>
+      <button type="button" (click)="clearButton()">Clear</button>
+      <button type="button" (click)="addTaskButton()">Add</button>
+      <button type="button" (click)="createButton()">Create</button>
+    </tr>
+  </table>
+
+  <table></table>
+</form>

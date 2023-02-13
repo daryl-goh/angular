@@ -1,0 +1,26 @@
+<h1>Yet Another Todo</h1>
+
+
+<app-home></app-home>
+
+<div>
+  <button type="button" (click)="sync()">Sync</button>
+</div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Priority</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let t of tasks">
+      <td>{{ t.task }}</td>
+      <td>{{ t.priority }}</td>
+      <td>{{ t.dueDate }}</td>
+    </tr>
+  </tbody>
+</table>

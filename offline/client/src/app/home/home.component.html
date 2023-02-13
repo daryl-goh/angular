@@ -1,0 +1,27 @@
+<h1>Contacts</h1>
+
+<h2>Add Tasks</h2>
+
+<form [formGroup]="form" (ngSubmit)="processTask()">
+    <table>
+        <tr>
+            <td>Task:</td>
+            <td><input type="text" formControlName="task"></td>
+        </tr>
+        <tr>
+            <td>Priority:</td>
+            <td><input type="number" formControlName="priority" min="1" max="10"></td>
+        </tr>
+        <tr>
+            <td>Due Date:</td>
+            <td><input type="date" formControlName="dueDate"></td>
+        </tr>
+        <button type="submit">Add</button>
+    </table>
+
+
+
+
+
+
+</form>
