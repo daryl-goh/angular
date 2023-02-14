@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -14,6 +15,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
+@Service
 public class S3Service {
 
     @Autowired
@@ -31,11 +33,12 @@ public class S3Service {
         metadata.setContentType(file.getContentType());
         metadata.setUserMetadata(userData);
 
+      
         String key = UUID.randomUUID().toString().substring(0, 8);
 
         PutObjectRequest putReq = new PutObjectRequest(
             "bucket-one", 
-            "myobjects/$s".formatted(key),
+            "myobjects/%s".formatted(key),
             file.getInputStream(),
             metadata);
         

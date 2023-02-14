@@ -7,7 +7,8 @@ import { WebcamModule } from 'ngx-webcam'
 import { AppComponent } from './app.component';
 import { CameraComponent } from './camera/camera.component';
 import { UploadComponent } from './upload/upload.component';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { CameraService } from './camera.service';
 
 const appsRoute: Routes = [
   { path: '', component: CameraComponent },
@@ -27,7 +28,7 @@ const appsRoute: Routes = [
     WebcamModule,
     RouterModule.forRoot(appsRoute)
   ],
-  providers: [],
+  providers: [ CameraService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
