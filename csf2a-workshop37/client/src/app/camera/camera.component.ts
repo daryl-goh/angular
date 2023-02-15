@@ -30,7 +30,7 @@ export class CameraComponent {
     console.info('imgData: ', img.imageData)
 
     this.cameraSvc.imageData = img.imageAsDataUrl
-    //this.pics.push(img.imageAsDataUrl)
+    // this.pics.push(img.imageAsDataUrl)
 
     this.router.navigate(['/upload'])
   }
