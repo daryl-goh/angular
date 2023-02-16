@@ -1,0 +1,44 @@
+<!-- form to input city -->
+
+<h2>Key In City To Get Details</h2>
+<form [formGroup]="weatherForm" (ngSubmit)="getWeather()">
+    <table>
+        <tr>
+            <td>City: <input type="text" formControlName="city"></td>
+            <td><button type="submit">Get</button></td>
+        </tr>
+    </table>
+</form>
+
+<!-- display weather results -->
+
+<!-- only render when weatherResult is not undefined (only when it has a value then display) -->
+<div *ngIf="!!weatherResult">
+    <table>
+        <tr *ngIf="!!weatherResult">
+            <td>City</td>
+            <td>{{  weatherResult.city }}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{ weatherResult.description }}</td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>{{ weatherResult.temp }}</td>
+        </tr>
+        <tr>
+            <td>Humidity</td>
+            <td>{{ weatherResult.humidity }}</td>
+        </tr>
+        <tr>
+            <td>Wind Speed</td>
+            <td>{{ weatherResult.windSpeed }}</td>
+        </tr>
+        <tr>
+            <td>Wind Degree</td>
+            <td>{{ weatherResult.windDegree }}</td>
+        </tr>
+    </table>
+
+</div>
