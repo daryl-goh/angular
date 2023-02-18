@@ -1,3 +1,27 @@
+<!-- city input field -->
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+    <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <input type="text" matInput formControlName="city">
+      </mat-form-field>
+    <!-- Add City button is disabled if form is invalid or city already exists  -->
+    <button 
+        type="submit" 
+        mat-raised-button color="primary"
+        [disabled]="!isFormValid()">Add City</button>
+    
+</form>
+
+<!-- city list -->
+<div *ngIf="cityList.length < 1">No Cities</div>
+
+<div class="city-list">
+    <mat-card [routerLink] = "['weather', city]" *ngFor = "let city of cityList">
+        <mat-card-content>{{ city }}</mat-card-content>
+    </mat-card>
+</div>
+
+<!-- 
 <form [formGroup]="weatherForm">
     <table>
         <tr>
@@ -10,5 +34,5 @@
 
 <div [routerLink]="['/weatherdetails']"   *ngFor="let c of cityList">
     {{ c }}
-</div>
+</div> -->
 

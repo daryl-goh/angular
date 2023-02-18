@@ -8,10 +8,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { WeatherService } from './services/weather.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { CitiesService } from './services/cities.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'weatherdetails', component: WeatherdetailsComponent },
+  { path: 'cities', component: HomeComponent },
+  { path: 'weather/:city', component: WeatherdetailsComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
 
@@ -25,9 +30,11 @@ const appRoutes: Routes = [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
-  providers: [WeatherService],
+  providers: [WeatherService, CitiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
