@@ -1,1 +1,14 @@
-<app-image></app-image>
+<h1>Number of Images Displayed: {{elonImages.length}}</h1>
+
+<div *ngIf="(elonImages.length % 2) > 0">
+    <h3>Odd Number of Images Displayed</h3>
+</div>
+
+<div *ngIf="(elonImages.length % 2) == 0">
+    <h3>Even Number of Images Displayed</h3>
+</div>
+
+<app-image 
+    *ngFor="let img of elonImages" 
+    [imageURL] = "img">
+</app-image>

@@ -1,13 +1,7 @@
-<table>
-    <tr>
-        <td>
-            <img src="../assets/elon.png" [width]="">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button type:button (click)="decreaseSize()">-</button>
-            <button type:button (click)="increaseSize()">+</button>
-        </td>
-    </tr>
-</table>
+<h1>URL {{ imageURL }} || SIZE: {{ width }}</h1>
+
+<div>
+    <img [src]="imageURL" (click)="imageClicked()" [width]="width">
+    <button type="button" (click)="resize(-5)">-</button>
+    <button type="button" (click)="resize(5)">+</button>
+</div>
