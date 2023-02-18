@@ -1,0 +1,14 @@
+<form [formGroup]="weatherForm">
+    <table>
+        <tr>
+            <td>City:</td>
+            <td><input type="text" formControlName="city"></td>
+            <td><button type="button" (click)="onAdd()">Add</button></td>
+        </tr>
+    </table>
+</form>
+
+<div [routerLink]="['/weatherdetails']"   *ngFor="let c of cityList">
+    {{ c }}
+</div>
+
