@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CartItem } from './cart.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'client';
+
+  cartList: CartItem[] = [];
+
+  selected(item: CartItem) {
+    console.log('>>>> selected:', item);
+
+    this.cartList.push(item);
+  }
 }
