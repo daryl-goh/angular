@@ -1,32 +1,36 @@
 import { Injectable } from "@angular/core";
+import Dexie from "dexie";
 import { Subject } from "rxjs";
+import { City } from "../models/city.model";
 
 @Injectable()
 
 // resposible for maintaining the state of cities added
-export class CitiesService {
-    cities : string[] = ['Singapore', 'Hong Kong', 'Taipei'];
-    // observable to notify subscribers of changes to cities list and other components can subscribe to it
-    onCitiesChange: Subject<string[]> = new Subject();
+export class CitiesService extends Dexie {
+    cities : string[] = [];
+  
+    // references the IndexDB table
+    // type of object we are storing, type of primary key
+    citiesTable!: Dexie.Table<City, number> 
 
-    addCity(city: string): void {
-        // spread operator
-        // returns a new list with new city added
-        // .push() does not return a new list
-        // will help to trigger change detection
-
-        // adds new city
-        this.cities = [...this.cities, city];
-        console.log('>>>>> cities: ', this.cities)
-
-        // fire event containing updated cities list
-        this.onCitiesChange.next(this.cities);
-
+    // create indexed db to save cities list
+    constructor() {
+        super('citiesDB') // name of indexed db
+        this.version(1).stores({
+            // create table 'cities' with PK cityId
+            cities: '++cityId' // auto increment cityId
+        });
+        this.citiesTable = this.table('cities');
     }
 
-    getCities(): string[] {
+    addCity(city: City): Promise<number> {
+        return this.citiesTable.add(city);
+    }
+
+
+    getCities(): Promise<City[]> {
         // returns a copy of cities
-        return this.cities.slice();
+        return this.citiesTable.toArray();
     }
  
 

@@ -16,23 +16,9 @@
 <div *ngIf="cityList.length < 1">No Cities</div>
 
 <div class="city-list">
-    <mat-card [routerLink] = "['weather', city]" *ngFor = "let city of cityList">
-        <mat-card-content>{{ city }}</mat-card-content>
+    <mat-card [routerLink] = "['weather', city.name]" *ngFor = "let city of cityList">
+        <mat-card-content>{{ city.name }}</mat-card-content>
     </mat-card>
 </div>
 
-<!-- 
-<form [formGroup]="weatherForm">
-    <table>
-        <tr>
-            <td>City:</td>
-            <td><input type="text" formControlName="city"></td>
-            <td><button type="button" (click)="onAdd()">Add</button></td>
-        </tr>
-    </table>
-</form>
-
-<div [routerLink]="['/weatherdetails']"   *ngFor="let c of cityList">
-    {{ c }}
-</div> -->
 
