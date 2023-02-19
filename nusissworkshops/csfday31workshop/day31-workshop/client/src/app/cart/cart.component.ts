@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { CartItem } from '../cart.model';
 
 @Component({
@@ -9,4 +10,17 @@ import { CartItem } from '../cart.model';
 export class CartComponent {
   @Input()
   cartList: CartItem[] = [];
+
+  @Output()
+  // onDelete = new Subject<CartItem>();
+  onDelete = new Subject<number>();
+
+  // deleteItem(item: CartItem) {
+  //   this.onDelete.next(item);
+  // }
+
+  deleteItem(i: number) {
+    console.info(`>>>> deleteItem: ${i}`);
+    this.onDelete.next(i);
+  }
 }

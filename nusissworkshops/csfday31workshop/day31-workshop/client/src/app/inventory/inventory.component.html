@@ -4,7 +4,13 @@
     <td>{{ item.description }}</td>
     <td><img src="/assets/fruits/{{ item.image }}.png"></td>
     <td>     
-        <button type="button" (click)="addToCart(item.description)">Add</button>
+        <button type="button" (click)="addToCart(item)">Add</button>
+    </td>
+    <td>     
+        <button type="button" (click)="increaseQuantity(1)">+</button>
+    </td>
+    <td>     
+        <button type="button" (click)="increaseQuantity(-1)">-</button>
     </td>
 </tr>
 
