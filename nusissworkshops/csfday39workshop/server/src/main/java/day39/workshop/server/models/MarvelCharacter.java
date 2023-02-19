@@ -1,7 +1,14 @@
 package day39.workshop.server.models;
 
+import java.util.List;
+
+
+
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 public class MarvelCharacter {
 
@@ -25,6 +32,14 @@ public class MarvelCharacter {
     String name;
     String description;
     String imagePath;
+    List<String> comments;
+    
+    public List<String> getComments() {
+        return comments;
+    }
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
 
     public Integer getCharacterId() {
         return characterId;
@@ -51,7 +66,9 @@ public class MarvelCharacter {
         this.imagePath = imagePath;
     }
 
+    // JsonObject from MARVEL API (original json format) convert to MarvelCharacter
     public static MarvelCharacter createFromJson(JsonObject json) {
+
         MarvelCharacter c = new MarvelCharacter();
         c.setCharacterId(json.getInt("id"));
         c.setName(json.getString("name"));
@@ -66,15 +83,35 @@ public class MarvelCharacter {
         return c;
     }
 
-    public JsonObject toJson() {
-        return Json
-            .createObjectBuilder()
-            .add("characterId", characterId)
-            .add("name", name)
-            .add("description", description)
-            .add("imagePath", imagePath)
-            .build();
+    // JsonObject from REDIS (stored as key value) convert to MarvelCharacter
+    public static MarvelCharacter createFromCache(JsonObject json) {
+        
+        MarvelCharacter c = new MarvelCharacter();
+        c.setCharacterId(json.getInt("characterId"));
+        c.setName(json.getString("name"));
+        c.setDescription(json.getString("description"));
+        c.setImagePath(json.getString("imagePath"));
+  
+        return c;
     }
 
+    public JsonObject toJson() {
+        JsonObjectBuilder job = Json
+          .createObjectBuilder()
+          .add("characterId", characterId)
+          .add("name", name)
+          .add("description", description)
+          .add("imagePath", imagePath);
+    
+        // create JsonArray of comments if comments is not null
+        if (comments != null) {
+          JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+          comments.forEach(c -> arrBuilder.add(c));
+          JsonArray commentsArray = arrBuilder.build();
+          job.add("comments", commentsArray);
+        }
+    
+        return job.build();
+      }
     
 }

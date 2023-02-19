@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import day39.workshop.server.services.MarvelCharacterService;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 
 @RestController
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +37,6 @@ public class MarvelCharacterController{
         // get list of characters nameStartsWith
         List<MarvelCharacter> characters = marvelCharacterSvc.getCharacters(nameStartsWith, limit, offset);
 
-
         // List<MarvelCharacter> must convert to JsonArray as our client is expecting as to return a JSON Format
         JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 
@@ -47,9 +48,20 @@ public class MarvelCharacterController{
         JsonArray resp = arrBuilder.build();
 
         return ResponseEntity.ok(resp.toString());
-        
-    
-    
     }
+
+    @GetMapping(path = "/character/{characterId}")
+    public ResponseEntity<String> getCharacterById(
+      @PathVariable Integer characterId
+    ) {
+      System.out.println("Getting character: " + characterId);
+      MarvelCharacter character = marvelCharacterSvc.getCharacterById(
+        characterId
+      );
+      // MarvelCharacter -> JsonObject
+      JsonObject resp = character.toJson();
+      return ResponseEntity.ok(resp.toString());
+    }
+
     
 }

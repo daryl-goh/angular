@@ -2,6 +2,7 @@ package day39.workshop.server.services;
 
 import java.io.StringReader;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.util.List;
 
@@ -31,68 +32,87 @@ public class MarvelAPIService {
     private static final String MARVEL_CHARACTERS_URL =
     "https://gateway.marvel.com:443/v1/public/characters";
 
-    public List<MarvelCharacter> getCharacters(
-        String nameStartsWith,
-        Integer limit,
-        Integer offset
-    ) {
-
-        // create authentication params and hash
+    private String createUrlWithAuthParams() {
+        // create authentication params
         Long ts = System.currentTimeMillis(); // current timestamp
         String signature = "%d%s%s".formatted(ts, privateKey, publicKey);
         String hash = "";
-
+    
+        // create hash from signature
         try {
-            // Message digest = md5, sha1, sha512
-            // Get an instance of MD5
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            // Calculate our hash
-            // Update our message digest
-            md5.update(signature.getBytes());
-            // Get the MD5 digest
-            byte[] h = md5.digest();
-            // Stringify the MD5 digest
-            hash = HexFormat.of().formatHex(h);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+          MessageDigest md5 = MessageDigest.getInstance("MD5");
+          md5.update(signature.getBytes()); // signature -> bytes
+          byte[] h = md5.digest(); // hashes bytes
+          hash = HexFormat.of().formatHex(h); // bytes -> hex string
+        } catch (NoSuchAlgorithmException e) {
+          e.printStackTrace();
         }
-
-        // build the url with auth params and query params
-        String url = UriComponentsBuilder.fromUriString(MARVEL_CHARACTERS_URL)
-            .queryParam("ts", ts)
-            .queryParam("apikey", publicKey)
-            .queryParam("hash", hash)
-            .queryParam("nameStartsWith", nameStartsWith)
-            .queryParam("limit", limit)
-            .queryParam("offset", offset)
-            .toUriString();
-
+    
+        // build URL with auth params and query params
+        final String url = UriComponentsBuilder
+          .fromUriString(MARVEL_CHARACTERS_URL)
+          .queryParam("ts", ts)
+          .queryParam("apikey", publicKey)
+          .queryParam("hash", hash)
+          .toUriString();
+    
+        return url;
+      }
+    
+      public List<MarvelCharacter> getCharacterById(Integer characterId) {
+        String urlWithAuthParams = createUrlWithAuthParams();
+    
+        final String url = UriComponentsBuilder
+          .fromUriString(urlWithAuthParams)
+          .path("/%d".formatted(characterId))
+          .toUriString();
+    
+        return getCharacters(url);
+      }
+    
+      public List<MarvelCharacter> getCharactersByName(
+        String nameStartsWith,
+        Integer limit,
+        Integer offset
+      ) {
+        // build URL with auth params and query params
+        String urlWithAuthParams = createUrlWithAuthParams();
+        final String url = UriComponentsBuilder
+          .fromUriString(urlWithAuthParams)
+          .queryParam("nameStartsWith", nameStartsWith)
+          .queryParam("limit", limit)
+          .queryParam("offset", offset)
+          .toUriString();
+    
+        return getCharacters(url);
+      }
+    
+      private List<MarvelCharacter> getCharacters(String url) {
         // create GET request
         RequestEntity req = RequestEntity
-            .get(url)
-            .accept(MediaType.APPLICATION_JSON)
-            .build();
-
+          .get(url)
+          .accept(MediaType.APPLICATION_JSON)
+          .build();
+    
         // Make GET request and receive response
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp = template.exchange(req, String.class);
-        
-        // Map JSON response to MarvelCharacter model
-        // But it is currently in type String, so we first convert String to JsonObject
-
+    
+        // String -> JsonObject
         JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
         JsonObject json = reader.readObject();
-
-        // get results JsonArray from Json
+    
+        // get results JsonArray from json
         JsonArray results = json.getJsonObject("data").getJsonArray("results");
-
-        // map each JsonValue in "results" array into MarvelCharacter
+    
+        // map each JsonValue in results array into MarvelCharacter
         List<MarvelCharacter> characters = results
-            .stream()
-            .map(jv -> jv.asJsonObject()) // JsonValue -> JsonObject
-            .map(jo -> MarvelCharacter.createFromJson(jo)) // JsonObject -> MarvelCharacter
-            .toList();
+          .stream()
+          .map(jv -> jv.asJsonObject()) // JsonValue -> JsonObject
+          .map(jo -> MarvelCharacter.createFromJson(jo)) // JsonObject -> MarvelCharacter
+          .toList();
+    
         return characters;
-    }     
+      } 
     
 }
