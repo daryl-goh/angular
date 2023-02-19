@@ -1,0 +1,10 @@
+<form [formGroup]="heroForm">
+    <tr>
+        <td>
+            <input type="text" formControlName="heroName">
+        </td>
+        <td>
+            <button type="button" [routerLink]="['/view1']" (click)="getCharacters()" >Search</button>
+        </td>
+    </tr>
+</form>
