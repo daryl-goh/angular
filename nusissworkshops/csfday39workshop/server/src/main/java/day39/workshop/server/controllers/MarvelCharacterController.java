@@ -25,7 +25,7 @@ import jakarta.json.JsonObject;
 public class MarvelCharacterController{
 
     @Autowired
-    private MarvelCharacterService marvelCharacterSvc;
+    private MarvelCharacterService marvelCharacterSvc
 
     @GetMapping(path="/characters") 
     public ResponseEntity<String> getCharacters(

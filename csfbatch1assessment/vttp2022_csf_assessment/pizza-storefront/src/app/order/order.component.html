@@ -1,0 +1,12 @@
+<h2>Order from {{ emailFromForm }}</h2>
+
+<div *ngFor="let o of orderSummary">
+    <h2>Order Id: {{ o.order_id   }}</h2>
+    <h4>{{ o.amount | number:'2.1-5'}}</h4>
+
+</div>
+
+
+
+
+<button type="button" [routerLink]="['/']">Back</button>

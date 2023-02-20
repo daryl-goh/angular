@@ -95,7 +95,7 @@ public class MarvelCharacter {
         return c;
     }
 
-    public JsonObject toJson() {
+    public JsonObject   toJson() {
         JsonObjectBuilder job = Json
           .createObjectBuilder()
           .add("characterId", characterId)
