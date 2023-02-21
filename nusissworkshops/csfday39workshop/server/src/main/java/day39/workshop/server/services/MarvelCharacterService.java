@@ -81,5 +81,9 @@ public class MarvelCharacterService {
 
     return character;
   }
+
+    public boolean createComment(Integer characterId, String comment) {
+      return commentRepo.createComment(characterId, comment);
+    }
     
 }

@@ -1,0 +1,8 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+        <mat-form-field class="example-full-width">
+          <mat-label>Character Name</mat-label>
+          <input matInput formControlName="nameStartsWith"/>
+        </mat-form-field>
+      
+     <button mat-raised-button color="primary" [disabled]="form.invalid">Search</button>
+</form>

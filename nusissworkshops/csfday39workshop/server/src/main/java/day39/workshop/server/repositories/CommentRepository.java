@@ -1,5 +1,6 @@
 package day39.workshop.server.repositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +64,27 @@ public class CommentRepository {
 
         return Optional.of(comments);
     }
+
+
+    public boolean createComment(Integer characterId, String comment) {
+        /*
+        db.comments.insertOne({
+            characterId: 1023,
+            comment: "This is a comment",
+            createdAt: new Date()
+        })
+         */
+
+        Document doc = new Document();
+        doc.append("characterId", characterId);
+        doc.append("comment", comment);
+        doc.append("createdAt", new Date());
+
+        Document docInserted = mongoTemplate.insert(doc, COMMENT_COLLECTION);
+
+        // return true if document inserted successfully
+        return docInserted != null;
+    }
+
     
 }

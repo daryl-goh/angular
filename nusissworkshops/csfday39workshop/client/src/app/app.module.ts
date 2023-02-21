@@ -4,37 +4,41 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { View0Component } from './view0/view0.component';
-import { View1Component } from './view1/view1.component';
-import { View2Component } from './view2/view2.component';
-import { View3Component } from './view3/view3.component';
 import { HttpClientModule } from '@angular/common/http';
-import { View0Service } from './services/view0/view0.service';
-
+import { MaterialModule } from './materials.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CharacterlistComponent } from './characterlist/characterlist.component';
+import { CharacterdetailsComponent } from './characterdetails/characterdetails.component';
+import { CommentformComponent } from './commentform/commentform.component';
+import { SearchComponent } from './search/search.component';
+import { CharacterService } from './character.service';
 
 const appRoutes: Routes = [
-  { path: '', component: View0Component },
-  { path: 'view0', component: View0Component },
-  { path: 'view1', component: View1Component },
-  { path: 'view2', component: View2Component },
-  { path: 'view3', component: View3Component },
+  { path: '', component: SearchComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'characters', component: CharacterlistComponent },
+  { path: 'characters/:characterId', component: CharacterdetailsComponent },
+  { path: 'characters/:characterId/comment', component: CommentformComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 @NgModule({
   declarations: [
     AppComponent,
-    View0Component,
-    View1Component,
-    View2Component,
-    View3Component
+    CharacterlistComponent,
+    CharacterdetailsComponent,
+    CommentformComponent,
+    SearchComponent,
+   
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MaterialModule,
+    BrowserAnimationsModule
   ],
-  providers: [View0Service],
+  providers: [CharacterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
