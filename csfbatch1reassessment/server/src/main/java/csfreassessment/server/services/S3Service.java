@@ -39,7 +39,7 @@ public class S3Service {
 
         // Create a put request
         PutObjectRequest putReq = new PutObjectRequest(
-            "bigbucket", // bucket name
+            "bucket-one", // bucket name
             "myobjects/%s".formatted(key), //key
             file.getInputStream(), //inputstream
             metadata);

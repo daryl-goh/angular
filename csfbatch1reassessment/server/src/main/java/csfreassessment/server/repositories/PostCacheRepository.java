@@ -1,6 +1,8 @@
 package csfreassessment.server.repositories;
 
+import java.io.StringReader;
 import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import csfreassessment.server.models.Post;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 @Repository
 public class PostCacheRepository {
@@ -26,6 +31,18 @@ public class PostCacheRepository {
             ,Duration.ofMinutes(15));
     }
 
+    public Boolean getPost(String id) {
+       String value = redisTemplate.opsForValue().get(id);
+    
+        if (value == null) {
+            return false;
+        } else {
+            redisTemplate.delete(id);
+            return true;
+        }
+
+        }
+    
 
 
     

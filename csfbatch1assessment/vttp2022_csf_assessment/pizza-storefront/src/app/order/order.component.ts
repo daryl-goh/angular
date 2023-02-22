@@ -18,7 +18,7 @@ export class OrderComponent implements OnInit {
   params$!: Subscription
 
   constructor(private activatedRoute: ActivatedRoute, private pizzaSvc: PizzaService) { }
-
+  
   ngOnInit() {
     this.params$ = this.activatedRoute.params.subscribe(params => {
       this.emailFromForm = params['email'];

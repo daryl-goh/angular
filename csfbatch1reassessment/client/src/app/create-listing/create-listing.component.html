@@ -1,0 +1,49 @@
+<form [formGroup] = "form" (ngSubmit)="submitForm()">
+    <tr>
+        <td> <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td><mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td><mat-form-field appearance="fill">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td><mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td><mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+          </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!-- <input type="file" formControlName="image"  #file/> -->
+
+              <mat-form-field>
+                <ngx-mat-file-input formControlName="image" #file>
+                </ngx-mat-file-input>
+             </mat-form-field>
+        </td>
+    </tr>
+    <button mat-raised-button color="primary" (click)="clearForm()">Clear</button>
+    <button mat-raised-button color="primary" [disabled]="!isValid()">Post</button>
+</form>

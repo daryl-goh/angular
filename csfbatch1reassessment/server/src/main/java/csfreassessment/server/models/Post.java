@@ -1,5 +1,7 @@
 package csfreassessment.server.models;
 
+import java.util.Date;
+
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
@@ -7,7 +9,7 @@ import jakarta.json.JsonObjectBuilder;
 public class Post {
 
     private String posting_id;
-    private String posting_date;
+    private Date posting_date;
     private String name;
     private String email;
     private String phone;
@@ -21,12 +23,15 @@ public class Post {
     public void setPosting_id(String posting_id) {
         this.posting_id = posting_id;
     }
-    public String getPosting_date() {
+    
+    public Date getPosting_date() {
         return posting_date;
     }
-    public void setPosting_date(String posting_date) {
+
+    public void setPosting_date(Date posting_date) {
         this.posting_date = posting_date;
     }
+
     public String getName() {
         return name;
     }
@@ -72,7 +77,8 @@ public class Post {
         email: <email>,
         phone: <phone>,
         title: <title>,
-        description: <description> image: <image URL from Spaces/S3>
+        description: <description> 
+        image: <image URL from Spaces/S3>
         
     }
 
@@ -82,7 +88,7 @@ public class Post {
         JsonObjectBuilder job =
         Json.createObjectBuilder()
         .add("posting_id", posting_id)
-        .add("posting_date", posting_date)
+        .add("posting_date", posting_date.toString())
         .add("name", name)
         .add("email", email)
         .add("phone", phone)
@@ -91,6 +97,13 @@ public class Post {
         .add("image", image);
         return job.build();
     }
+    @Override
+    public String toString() {
+        return "Post [posting_id=" + posting_id + ", posting_date=" + posting_date + ", name=" + name + ", email="
+                + email + ", phone=" + phone + ", title=" + title + ", description=" + description + ", image=" + image
+                + "]";
+    }
+
 
     
     

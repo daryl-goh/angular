@@ -1,0 +1,15 @@
+<mat-card class="confirmation-card">
+    <mat-card-header>
+      <div mat-card-avatar class="confirmation-header-image"></div>
+      <mat-card-title>Thank You</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+      Thank you for using our service. Your posting id is {{ posting_id }}
+      </p>
+    </mat-card-content>
+    <div>
+      <button mat-raised-button color="primary" type="button" (click)="backHome()">Back</button>
+    </div>
+  </mat-card>

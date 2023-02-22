@@ -14,7 +14,7 @@ create table postings (
     phone varchar(20) not null default '',
     title varchar(256),
     description text,
-    picture varchar(256) not null,
+    image varchar(256) not null,
 
     primary key (posting_id)
 );
